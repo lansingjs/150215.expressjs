@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/lansingjs/140820.node-starter/issues"
   },
-  "homepage": "https://github.com/lansingjs/140820.node-starter"
+  "homepage": "https://github.com/lansingjs/140820.node-starter",
+  "dependencies": {
+    "express": "^4.8.5"
+  }
 }
