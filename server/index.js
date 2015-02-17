@@ -3,6 +3,7 @@ var app = express();
 var faker = require('faker');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
+var serveStatic = require('serve-static');
 
 var things = [];
 for (var index = 0; index < 100; index++) {
@@ -11,8 +12,22 @@ for (var index = 0; index < 100; index++) {
   things.push(item);
 }
 
+app.set('views', './templates');
+app.set('view engine', 'hbs');
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(serveStatic('static'))
+
+app.get('/things/:id.html', function (req, res) {
+  var filtered = things.filter(function (item) {
+    return item.id == req.params.id;
+  });
+  if (filtered[0]) {
+    res.render('thing', {data: filtered[0]});
+  } else {
+    res.status(404).end();
+  }
+})
 
 app.use(function (req, res, next) {
   if (req.cookies.authenticated) {
@@ -20,10 +35,6 @@ app.use(function (req, res, next) {
   } else {
     res.status(401).end();
   }
-
-});
-app.get('/', function(req, res){
-  res.send('Hello World');
 });
 
 app.get('/things', function (req, res) {
