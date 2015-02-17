@@ -1,0 +1,10 @@
+<html>
+  <body>
+    {{#each data}}
+    {{@key}} {{this}}<br>
+     {{#each this}}
+     {{@key}} {{this}}<br>
+     {{/each}}
+    {{/each}}
+  </body>
+</html>
